@@ -1,0 +1,38 @@
+#!/bin/sh
+
+
+echo "🚀 Running pre-commit checks..."
+
+# Check for uncommitted changes in package.json
+if git diff --cached --name-only | grep -q "package.json"; then
+  echo "📦 package.json changed. Running pnpm install..."
+  pnpm install || {
+    echo "❌ pnpm install failed"
+    exit 1
+  }
+fi
+
+
+# Run ESLint
+echo "🔍 Running ESLint..."
+pnpm lint || {
+  echo "❌ ESLint check failed. Please fix the errors and try again."
+  exit 1
+}
+
+# Run type checking
+echo "✨ Running TypeScript check..."
+pnpm tsc --noEmit || {
+  echo "❌ TypeScript check failed. Please fix type errors and try again."
+  exit 1
+}
+
+# Run lint-staged for other checks (formatting, etc)
+echo "🎯 Running lint-staged..."
+pnpm lint-staged || {
+  echo "❌ lint-staged failed. Please fix the issues and try again."
+  exit 1
+}
+
+echo "✅ All pre-commit checks passed!"
+
