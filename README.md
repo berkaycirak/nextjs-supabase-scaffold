@@ -1,36 +1,273 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Supabase Scaffold
 
-## Getting Started
+A modern, full-stack web application scaffold built with Next.js 15, Supabase, and TypeScript. Features a comprehensive testing setup, state management, and developer experience tools.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Core Framework
+
+- **[Next.js 15](https://nextjs.org/)** - React framework with App Router and Turbopack
+- **[React 19](https://react.dev/)** - UI library with latest features
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development
+
+### Database & Authentication
+
+- **[Supabase](https://supabase.com/)** - Backend-as-a-Service with PostgreSQL database
+- **[@supabase/ssr](https://supabase.com/docs/guides/auth/server-side/nextjs)** - Server-side rendering support
+
+### State Management
+
+- **[Zustand](https://github.com/pmndrs/zustand)** - Lightweight state management
+- **[TanStack Query](https://tanstack.com/query)** - Async state management and server state caching
+
+### UI & Styling
+
+- **[shadcn/ui](https://ui.shadcn.com/)** - Modern UI components built on Radix UI
+- **[Tailwind CSS v4](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Lucide React](https://lucide.dev/)** - Beautiful icon library
+- **[Radix UI](https://www.radix-ui.com/)** - Unstyled, accessible UI primitives
+
+### Forms & Validation
+
+- **[React Hook Form](https://react-hook-form.com/)** - Performant forms with easy validation
+- **[Zod](https://zod.dev/)** - Runtime schema validation
+
+### Testing
+
+- **[Vitest](https://vitest.dev/)** - Unit and integration testing
+- **[Testing Library](https://testing-library.com/)** - Simple and complete testing utilities
+- **[Playwright](https://playwright.dev/)** - End-to-end testing
+- **[MSW](https://mswjs.io/)** - API mocking for testing
+- **[jsdom](https://github.com/jsdom/jsdom)** - DOM implementation for testing
+
+### Developer Experience
+
+- **[ESLint](https://eslint.org/)** - Code linting with Next.js config
+- **[Prettier](https://prettier.io/)** - Code formatting with Tailwind plugin
+- **[Husky](https://typicode.github.io/husky/)** - Git hooks
+- **[lint-staged](https://github.com/okonet/lint-staged)** - Run linters on staged files
+
+## 📁 Project Structure
+
+```
+nextjs-supabase-scaffold/
+├── public/                     # Static assets
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src/
+│   ├── __mocks__/              # MSW mock handlers
+│   │   ├── handlers.ts         # API mock handlers
+│   │   └── node.ts            # Node.js MSW setup
+│   ├── app/                    # Next.js App Router
+│   │   ├── auth/               # Authentication routes
+│   │   │   └── confirm/
+│   │   │       └── route.ts    # Email confirmation handler
+│   │   ├── error/              # Error pages
+│   │   │   └── page.tsx
+│   │   ├── instruments/        # Example protected page
+│   │   │   └── page.tsx
+│   │   ├── login/              # Authentication
+│   │   │   ├── actions.ts      # Server actions
+│   │   │   └── page.tsx        # Login page
+│   │   ├── private/            # Protected routes
+│   │   │   └── page.tsx
+│   │   ├── favicon.ico
+│   │   ├── globals.css         # Global styles
+│   │   ├── layout.tsx          # Root layout
+│   │   └── page.tsx            # Home page
+│   ├── components/             # Reusable components
+│   │   └── ui/                 # shadcn/ui components
+│   │       └── button.tsx
+│   ├── config/                 # Configuration files
+│   │   └── index.ts
+│   ├── constants/              # App constants
+│   │   └── index.ts
+│   ├── hooks/                  # Custom React hooks
+│   │   └── index.ts
+│   ├── lib/                    # Utility libraries
+│   │   └── utils.ts            # Utility functions
+│   ├── store/                  # State management
+│   │   └── index.ts            # Zustand stores
+│   ├── tests/                  # Test files
+│   │   ├── Button.test.tsx     # Component tests
+│   │   ├── example.spec.ts     # E2E test example
+│   │   └── vitest.setup.ts     # Test setup
+│   ├── types/                  # TypeScript type definitions
+│   │   └── index.ts
+│   └── utils/                  # Utility functions
+│       └── supabase/           # Supabase utilities
+│           ├── client.ts       # Client-side Supabase
+│           ├── middleware.ts   # Middleware utilities
+│           └── server.ts       # Server-side Supabase
+├── tests/                      # E2E tests (Playwright)
+├── components.json             # shadcn/ui configuration
+├── eslint.config.mjs          # ESLint configuration
+├── middleware.ts              # Next.js middleware
+├── next.config.ts             # Next.js configuration
+├── package.json               # Dependencies and scripts
+├── playwright.config.ts       # Playwright configuration
+├── postcss.config.mjs         # PostCSS configuration
+├── tsconfig.json              # TypeScript configuration
+└── vitest.config.mts          # Vitest configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+
+- pnpm (recommended) or npm
+- Supabase account
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone <your-repo-url>
+   cd nextjs-supabase-scaffold
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**
 
-## Deploy on Vercel
+   ```bash
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up environment variables**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   cp .env.local.example .env.local
+   ```
+
+   Add your Supabase credentials:
+
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Run the development server**
+
+   ```bash
+   pnpm dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📝 Available Scripts
+
+- `pnpm dev` - Start development server with Turbopack
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+- `pnpm test` - Run unit/integration tests with Vitest
+- `pnpm test:e2e` - Run end-to-end tests with Playwright
+- `pnpm coverage` - Generate test coverage report
+
+## 🧪 Testing Strategy
+
+### Unit & Integration Tests (Vitest + Testing Library)
+
+- Located in `src/tests/`
+- Run with `pnpm test`
+- Uses jsdom environment
+- Includes MSW for API mocking
+
+### End-to-End Tests (Playwright)
+
+- Located in `tests/`
+- Run with `pnpm test:e2e`
+- Tests across Chrome, Firefox, and Safari
+- Generates HTML reports
+
+### Test Configuration
+
+- **Vitest**: Configured for React components with jsdom
+- **MSW**: Mock service worker for API testing
+- **Testing Library**: React component testing utilities
+- **Playwright**: Cross-browser E2E testing
+
+## 🎨 UI Components
+
+This project uses **shadcn/ui** with the following configuration:
+
+- **Style**: New York
+- **Base Color**: Neutral
+- **CSS Variables**: Enabled
+- **Icon Library**: Lucide React
+
+Add new components:
+
+```bash
+pnpx shadcn@latest add [component-name]
+```
+
+## 🔒 Authentication Flow
+
+- Supabase Auth integration
+- Server-side rendering support
+- Protected routes with middleware
+- Email confirmation handling
+
+## 🚀 Deployment
+
+This scaffold is optimized for deployment on:
+
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **Railway**
+- **Any Node.js hosting platform**
+
+## 🤝 Development Workflow
+
+### Pre-commit Hooks
+
+- **Husky**: Manages Git hooks
+- **lint-staged**: Runs linters on staged files
+- Automatically formats code with Prettier
+- Runs ESLint with auto-fix
+
+### Code Quality
+
+- TypeScript for type safety
+- ESLint with Next.js configuration
+- Prettier with Tailwind CSS plugin
+- Consistent import aliases (`@/`)
+
+## 🔧 Configuration Files
+
+- `components.json` - shadcn/ui configuration
+- `eslint.config.mjs` - ESLint rules and settings
+- `vitest.config.mts` - Unit test configuration
+- `playwright.config.ts` - E2E test configuration
+- `next.config.ts` - Next.js build configuration
+- `middleware.ts` - Authentication middleware
+
+## 📚 Key Features
+
+- ✅ **Type-safe development** with TypeScript
+- ✅ **Modern React patterns** with hooks and server components
+- ✅ **Comprehensive testing setup** (unit, integration, E2E)
+- ✅ **Authentication & database** ready with Supabase
+- ✅ **State management** with Zustand and TanStack Query
+- ✅ **Modern UI components** with shadcn/ui and Tailwind CSS
+- ✅ **Developer experience** tools (ESLint, Prettier, Husky)
+- ✅ **Production ready** with optimized build configuration
+
+## 🤖 Dev-Friendly Structure
+
+This scaffold is designed to work seamlessly with
+
+- Clear folder structure with logical separation
+- Consistent naming conventions
+- Comprehensive type definitions
+- Well-documented configuration files
+- Modern patterns and best practices
+
+---
+
+Built with ❤️ using modern web development best practices.
