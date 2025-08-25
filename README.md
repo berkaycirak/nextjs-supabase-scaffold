@@ -55,65 +55,33 @@ A modern, full-stack web application scaffold built with Next.js 15, Supabase, a
 ```
 nextjs-supabase-scaffold/
 ├── public/                     # Static assets
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
 ├── src/
-│   ├── __mocks__/              # MSW mock handlers
-│   │   ├── handlers.ts         # API mock handlers
-│   │   └── node.ts            # Node.js MSW setup
+│   ├── __mocks__/              # MSW mock handlers for testing
 │   ├── app/                    # Next.js App Router
 │   │   ├── auth/               # Authentication routes
-│   │   │   └── confirm/
-│   │   │       └── route.ts    # Email confirmation handler
 │   │   ├── error/              # Error pages
-│   │   │   └── page.tsx
-│   │   ├── instruments/        # Example protected page
-│   │   │   └── page.tsx
-│   │   ├── login/              # Authentication
-│   │   │   ├── actions.ts      # Server actions
-│   │   │   └── page.tsx        # Login page
-│   │   ├── private/            # Protected routes
-│   │   │   └── page.tsx
-│   │   ├── favicon.ico
+│   │   ├── (your-pages)/       # Add your application pages here
 │   │   ├── globals.css         # Global styles
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Home page
 │   ├── components/             # Reusable components
 │   │   └── ui/                 # shadcn/ui components
-│   │       └── button.tsx
 │   ├── config/                 # Configuration files
-│   │   └── index.ts
 │   ├── constants/              # App constants
-│   │   └── index.ts
 │   ├── hooks/                  # Custom React hooks
-│   │   └── index.ts
 │   ├── lib/                    # Utility libraries
-│   │   └── utils.ts            # Utility functions
-│   ├── store/                  # State management
-│   │   └── index.ts            # Zustand stores
-│   ├── tests/                  # Test files
-│   │   ├── Button.test.tsx     # Component tests
-│   │   ├── example.spec.ts     # E2E test example
-│   │   └── vitest.setup.ts     # Test setup
+│   ├── store/                  # State management (Zustand)
+│   ├── tests/                  # Unit & integration tests
+│   │   ├── e2e/                # E2E test specs
+│   │   └── unit/               # Unit test files
 │   ├── types/                  # TypeScript type definitions
-│   │   └── index.ts
 │   └── utils/                  # Utility functions
-│       └── supabase/           # Supabase utilities
-│           ├── client.ts       # Client-side Supabase
-│           ├── middleware.ts   # Middleware utilities
-│           └── server.ts       # Server-side Supabase
-├── tests/                      # E2E tests (Playwright)
+│       └── supabase/           # Supabase client configurations
 ├── components.json             # shadcn/ui configuration
 ├── eslint.config.mjs          # ESLint configuration
 ├── middleware.ts              # Next.js middleware
 ├── next.config.ts             # Next.js configuration
-├── package.json               # Dependencies and scripts
 ├── playwright.config.ts       # Playwright configuration
-├── postcss.config.mjs         # PostCSS configuration
-├── tsconfig.json              # TypeScript configuration
 └── vitest.config.mts          # Vitest configuration
 ```
 
