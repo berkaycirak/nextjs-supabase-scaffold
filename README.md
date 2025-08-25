@@ -1,5 +1,8 @@
 # Next.js Supabase Scaffold
 
+![Unit & Integration Tests](https://github.com/berkaycirak/nextjs-supabase-scaffold/workflows/Unit%20%26%20Integration%20Tests/badge.svg)
+![E2E Tests](https://github.com/berkaycirak/nextjs-supabase-scaffold/workflows/E2E%20Tests/badge.svg)
+
 A modern, full-stack web application scaffold built with Next.js 15, Supabase, and TypeScript. Features a comprehensive testing setup, state management, and developer experience tools.
 
 ## 🚀 Tech Stack
