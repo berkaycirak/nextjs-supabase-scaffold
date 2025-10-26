@@ -17,6 +17,8 @@ A modern, full-stack web application scaffold built with Next.js 15, Supabase, a
 
 - **[Supabase](https://supabase.com/)** - Backend-as-a-Service with PostgreSQL database
 - **[@supabase/ssr](https://supabase.com/docs/guides/auth/server-side/nextjs)** - Server-side rendering support
+- **[Prisma](https://prisma.io/)** - Type-safe database ORM with migrations and introspection
+  git
 
 ### State Management
 
@@ -55,6 +57,8 @@ A modern, full-stack web application scaffold built with Next.js 15, Supabase, a
 ```
 nextjs-supabase-scaffold/
 ├── public/                     # Static assets
+├── prisma/                     # Prisma database schema and migrations
+│   └── schema.prisma           # Database schema definition
 ├── src/
 │   ├── __mocks__/              # MSW mock handlers for testing
 │   ├── app/                    # Next.js App Router
@@ -68,8 +72,11 @@ nextjs-supabase-scaffold/
 │   │   └── ui/                 # shadcn/ui components
 │   ├── config/                 # Configuration files
 │   ├── constants/              # App constants
+│   ├── features/               # Feature-based modules
+│   │   └── (your-features)/    # Organize code by business features
 │   ├── hooks/                  # Custom React hooks
 │   ├── lib/                    # Utility libraries
+│   │   └── db.ts               # Prisma database client
 │   ├── store/                  # State management (Zustand)
 │   ├── tests/                  # Unit & integration tests
 │   │   ├── e2e/                # E2E test specs
@@ -82,6 +89,7 @@ nextjs-supabase-scaffold/
 ├── middleware.ts              # Next.js middleware
 ├── next.config.ts             # Next.js configuration
 ├── playwright.config.ts       # Playwright configuration
+├── prisma.config.ts           # Prisma configuration
 └── vitest.config.mts          # Vitest configuration
 ```
 
@@ -91,7 +99,7 @@ nextjs-supabase-scaffold/
 
 - Node.js 18+
 - pnpm (recommended) or npm
-- Supabase account
+- Supabase account (for DB)
 
 ### Installation
 
@@ -114,14 +122,27 @@ nextjs-supabase-scaffold/
    cp .env.local.example .env.local
    ```
 
-   Add your Supabase credentials:
+   Add your Supabase credentials and database URL:
 
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   DATABASE_URL=your_database_connection_string
    ```
 
-4. **Run the development server**
+   **Important**: The `DATABASE_URL` is required for Prisma to connect to your database. Without it, database operations will fail.
+
+4. **Set up the database**
+
+   Run your first migration to create the database tables:
+
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+
+   This command will create migration files, apply them to your database, and generate the Prisma Client.
+
+5. **Run the development server**
 
    ```bash
    pnpm dev
@@ -138,6 +159,9 @@ nextjs-supabase-scaffold/
 - `pnpm test` - Run unit/integration tests with Vitest
 - `pnpm test:e2e` - Run end-to-end tests with Playwright
 - `pnpm coverage` - Generate test coverage report
+- `npx prisma migrate dev` - Create and apply migrations
+- `npx prisma studio` - Open Prisma Studio (database GUI)
+- `npx prisma generate` - Regenerate Prisma client after manual schema changes
 
 ## 🧪 Testing Strategy
 
@@ -209,6 +233,85 @@ This scaffold is optimized for deployment on:
 - Prettier with Tailwind CSS plugin
 - Consistent import aliases (`@/`)
 
+## 🗄️ Database Setup
+
+This project uses **Prisma** as the ORM for type-safe database operations:
+
+### Database Configuration
+
+- **Schema**: Defined in `prisma/schema.prisma`
+- **Client**: Generated types and client in `src/lib/db.ts`
+- **Configuration**: Prisma settings in `prisma.config.ts`
+
+### Working with the Database
+
+```bash
+# Create and apply migrations (recommended workflow)
+npx prisma migrate dev --name your_migration_name
+
+# Open Prisma Studio (database GUI)
+npx prisma studio
+
+# Regenerate Prisma client after manual schema.prisma edits
+npx prisma generate
+
+# Push schema changes without migrations (prototyping only)
+npx prisma db push
+
+# Reset database and apply all migrations (development only)
+npx prisma migrate reset
+```
+
+**Recommended workflow:**
+
+1. Edit `prisma/schema.prisma`
+2. Run `npx prisma migrate dev --name describe_your_change`
+3. Prisma will automatically generate the client and apply migrations
+
+## 🏗️ Feature-Based Development
+
+This scaffold promotes **feature-based architecture** for better code organization and maintainability:
+
+### Feature Structure
+
+Organize your code by business features in the `src/features/` directory:
+
+```
+src/features/
+├── auth/                       # Authentication feature
+│   ├── components/             # Feature-specific components
+│   │   ├── LoginForm.tsx
+│   │   └── SignupForm.tsx
+│   ├── hooks/                  # Feature-specific hooks
+│   │   └── useAuth.ts
+│   ├── services/               # API calls and business logic
+│   │   └── authService.ts
+│   ├── stores/                 # Feature-specific state
+│   │   └── authStore.ts
+│   ├── types/                  # Feature-specific types
+│   │   └── auth.types.ts
+│   └── index.ts                # Feature exports
+├── dashboard/                  # Dashboard feature
+├── profile/                    # User profile feature
+└── settings/                   # Settings feature
+```
+
+### Benefits of Feature-Based Architecture
+
+- **Scalability**: Easy to add new features without affecting existing code
+- **Maintainability**: Related code is co-located and easier to find
+- **Team Collaboration**: Different teams can work on different features
+- **Code Reusability**: Clear separation between shared and feature-specific code
+- **Testing**: Feature-specific tests are easier to organize and maintain
+
+### Guidelines
+
+1. **Keep features independent**: Minimize dependencies between features
+2. **Use shared components**: Place reusable UI components in `src/components/`
+3. **Export cleanly**: Use `index.ts` files to expose feature APIs
+4. **Follow naming conventions**: Use consistent naming across features
+5. **Test by feature**: Organize tests to match your feature structure
+
 ## 🔧 Configuration Files
 
 - `components.json` - shadcn/ui configuration
@@ -217,15 +320,18 @@ This scaffold is optimized for deployment on:
 - `playwright.config.ts` - E2E test configuration
 - `next.config.ts` - Next.js build configuration
 - `middleware.ts` - Authentication middleware
+- `prisma.config.ts` - Prisma configuration
+- `prisma/schema.prisma` - Database schema definition
 
 ## 📚 Key Features
 
 - ✅ **Type-safe development** with TypeScript
 - ✅ **Modern React patterns** with hooks and server components
 - ✅ **Comprehensive testing setup** (unit, integration, E2E)
-- ✅ **Authentication & database** ready with Supabase
+- ✅ **Authentication & database** ready with Supabase and Prisma
 - ✅ **State management** with Zustand and TanStack Query
 - ✅ **Modern UI components** with shadcn/ui and Tailwind CSS
+- ✅ **Feature-based architecture** for scalable code organization
 - ✅ **Developer experience** tools (ESLint, Prettier, Husky)
 - ✅ **Production ready** with optimized build configuration
 
